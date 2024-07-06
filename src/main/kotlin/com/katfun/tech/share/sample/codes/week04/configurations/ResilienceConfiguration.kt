@@ -62,7 +62,6 @@ class CustomCircuitBreakerNameResolver(
                         event.stateTransition.toState
                     )
                 }
-            println("ㅁㄴㅇㄹ")
         }
 
         return circuitBreakerName
