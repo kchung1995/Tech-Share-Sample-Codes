@@ -11,6 +11,22 @@ spring:
       circuitbreaker:
         enabled: true
 
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 10
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 1s
+        failure-rate-threshold: 50
+        record-exceptions:
+          - feign.RetryableException
+        ignore-exceptions:
+          - feign.codec.DecodeException
+
 katfun:
   week04:
     host: https://katfun.whatever.com
