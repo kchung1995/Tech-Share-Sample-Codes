@@ -91,8 +91,6 @@ class ApiFetchingExample(
 
         assertThat(circuitBreakerRegistry.circuitBreaker(CIRCUIT_BREAKER_NAME).state).isEqualTo(CircuitBreaker.State.CLOSED)
 
-        circuitBreakerRegistry.allCircuitBreakers.forEach { println(it) }
-
         (1..20).forEach { _ ->
             exampleApiFetcher.week04(exampleApiRequest, timeoutOptions)
         }
