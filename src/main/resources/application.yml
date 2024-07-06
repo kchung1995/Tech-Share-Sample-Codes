@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: local
+
+---
+spring.config.activate.on-profile: local
+
+spring:
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+katfun:
+  week04:
+    host: https://katfun.whatever.com
