@@ -18,7 +18,7 @@ class ResilienceConfiguration(
 
     @Bean
     fun circuitBreakerNameResolver(): CircuitBreakerNameResolver {
-        return CircuitBreakerNameResolver { feignClientName: String, _, method: Method -> feignClientName + "_" + method.name }
+        return CustomCircuitBreakerNameResolver(registry)
     }
 
     @PostConstruct
@@ -62,6 +62,7 @@ class CustomCircuitBreakerNameResolver(
                         event.stateTransition.toState
                     )
                 }
+            println("ㅁㄴㅇㄹ")
         }
 
         return circuitBreakerName
