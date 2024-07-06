@@ -20,6 +20,9 @@ repositories {
 
 val coroutinesVersion = "1.8.1"
 
+val openFeignVersion = "4.1.2"
+val resilience4jVersion = "3.1.0"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -30,6 +33,10 @@ dependencies {
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+
+    // spring cloud starter
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:$openFeignVersion")
+    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:$resilience4jVersion")
 }
 
 tasks.withType<KotlinCompile> {
