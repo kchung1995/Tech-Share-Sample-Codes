@@ -1,5 +1,6 @@
 package com.katfun.tech.share.sample.codes.week05.sample01
 
+import com.katfun.tech.share.sample.codes.week05.sample01.Asset.Companion.sortById
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,11 +16,9 @@ class AssetsService(
         val insurances = assetsRepository.insurances(userId = userId)
         val cars = assetsRepository.cars(userId = userId)
 
-        return (bankAccounts.filter { it.isExpired.not() && it.isDisplay && it.isShared.not() } +
-                stocks.filter { it.isExpired.not() && it.isDisplay } +
-                insurances.filter { it.isExpired.not() && it.isDisplay && it.isPrize } +
-                cars.filter { it.isExpired.not() && it.isDisplay })
-            .sortedBy { it.id }
+        return (bankAccounts + stocks + insurances + cars)
+            .filter { it.isActive() }
+            .sortById()
     }
 }
 
@@ -27,6 +26,12 @@ sealed interface Asset {
     val id: Long
     val isDisplay: Boolean
     val isExpired: Boolean
+
+    fun isActive(): Boolean
+
+    companion object {
+        fun List<Asset>.sortById() = sortedBy { it.id }
+    }
 }
 
 data class BankAccount(
@@ -34,14 +39,18 @@ data class BankAccount(
     override val isDisplay: Boolean,
     override val isExpired: Boolean,
     val isShared: Boolean
-) : Asset
+) : Asset {
+    override fun isActive() = this.isExpired.not() && this.isDisplay && this.isShared.not()
+}
 
 data class Stocks(
     override val id: Long,
     override val isDisplay: Boolean,
     override val isExpired: Boolean,
     val isKorean: Boolean
-) : Asset
+) : Asset {
+    override fun isActive() = this.isExpired.not() && this.isDisplay
+}
 
 data class Insurance(
     override val id: Long,
@@ -49,13 +58,17 @@ data class Insurance(
     override val isExpired: Boolean,
     val isInsured: Boolean,
     val isPrize: Boolean
-) : Asset
+) : Asset {
+    override fun isActive() = this.isExpired.not() && this.isDisplay && this.isPrize
+}
 
 data class Car(
     override val id: Long,
     override val isDisplay: Boolean,
     override val isExpired: Boolean,
-) : Asset
+) : Asset {
+    override fun isActive(): Boolean = this.isExpired.not() && this.isDisplay
+}
 
 @JvmInline
 value class UserId(val id: Long)
