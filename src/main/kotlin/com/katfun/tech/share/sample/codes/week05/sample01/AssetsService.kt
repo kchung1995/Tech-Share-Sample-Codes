@@ -40,7 +40,7 @@ data class BankAccount(
     override val isExpired: Boolean,
     val isShared: Boolean
 ) : Asset {
-    override fun isActive() = this.isExpired.not() && this.isDisplay && this.isShared.not()
+    override fun isActive() = this.isExpired.not() && this.isDisplay && this.isShared
 }
 
 data class Stocks(
