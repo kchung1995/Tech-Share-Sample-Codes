@@ -6,6 +6,11 @@ spring:
 spring.config.activate.on-profile: local
 
 spring:
+  jpa:
+    database: h2
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
   cloud:
     openfeign:
       circuitbreaker:
